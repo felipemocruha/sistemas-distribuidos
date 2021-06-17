@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  scylla-1:
+    image: scylladb/scylla
+    container_name: scylla-1
+
+  scylla-2:
+    image: scylladb/scylla
+    container_name: scylla-2
+    command: --seeds=scylla-1,scylla-3
+
+  scylla-3:
+    image: scylladb/scylla
+    container_name: scylla-3
+    command: --seeds=scylla-1,scylla-2
+
+  redis:
+    image: redis:4
