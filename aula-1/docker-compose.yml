@@ -4,39 +4,42 @@ services:
   scylla-1:
     image: scylladb/scylla
     container_name: scylla-1
-    networks: 
+    networks:
       - transactions
-      
+
   scylla-2:
     image: scylladb/scylla
     container_name: scylla-2
     command: --seeds=scylla-1,scylla-3
-    networks: 
-      - transactions    
+    networks:
+      - transactions
 
   scylla-3:
     image: scylladb/scylla
     container_name: scylla-3
     command: --seeds=scylla-1,scylla-2
-    networks: 
+    networks:
       - transactions
 
   redis:
     image: redis:4
-    networks: 
-      - transactions    
+    container_name: redis
+    networks:
+      - transactions
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
-    networks: 
+    networks:
       - transactions
+    container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
 
   kafka:
     image: confluentinc/cp-kafka:latest
-    networks: 
+    container_name: kafka
+    networks:
       - transactions
     depends_on:
       - zookeeper
@@ -52,13 +55,13 @@ services:
 
   envoy:
     image: envoyproxy/envoy:v1.15.0
-    networks: 
+    container_name: envoy
+    networks:
       - transactions
     command: -l error --config-path /etc/envoy/envoy.yaml
     volumes:
       - ./envoy-config.yaml:/etc/envoy/envoy.yaml:ro
-      
-networks: 
+
+networks:
   transactions:
-    driver: bridge        
-    
+    driver: bridge

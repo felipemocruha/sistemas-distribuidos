@@ -1,5 +1,7 @@
 # Aula 1
 
+## Contexto
+
 Imagine que você acabou de entrar em um time de desenvolvimento de uma empresa de pagamentos digitais.
 
 Você é responsável por manter um conjunto de sistemas que entregam a funcionalidade de registrar transações e depois consultar seu status. Utilize esse contexto para analisar os pontos a seguir.
@@ -18,7 +20,64 @@ Considere os dois fluxos seguintes:
 
 ![](diagrams/list_transactions.png)
 
-## Exercícios
+## Setup
+
+O código fonte que implementa as funcionalidades descritas acima está nesse repositório. Utilize o código fonte e os materiais de apoio para responder os exercícios.
+
+Para executar os sistemas, você precisa ter o `docker` e `docker-compose` instalados no seu computador.
+
+1. Utilize [esse link](https://docs.docker.com/get-docker/) para baixar e instalar o `docker` no seu sistema.
+
+2. Para executar todos os componentes do sistema, execute esse comando:
+
+```
+docker-compose up -d
+```
+
+Esse comando inicia os containers em segundo plano.
+
+3. Verifique que os seguintes containers foram criados utilizando o comando:
+
+```
+- scylla-1
+- scylla-2
+- scylla-3
+- redis
+- kafka
+- zookeeper
+- envoy
+- bff
+- transactions
+- antifraud-1
+- antifraud-2
+```
+
+```
+docker ps
+```
+
+4. Caso você necessite desligar algum container para responder as perguntas a seguir, execute o procedimento:
+
+a. liste os containers em execução:
+
+```
+docker ps
+```
+
+b. escolha o container que deseja parar, copie seu `CONTAINER ID` e execute:
+
+```
+docker kill -f <CONTAINER_ID>
+```
+
+
+Exemplo:
+
+![](diagrams/docker.png)
+
+## Prática
+
+### Exercícios
 
 1. Ainda é possível registrar transações quando uma das réplicas do `Cassandra` é desligada? E duas?
 
