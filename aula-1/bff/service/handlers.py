@@ -8,14 +8,12 @@ from service.core import (
 from service.pubsub import transaction_client
 from service.cache import cache
 from service.failures import inject_failures
-#from service.metrics import instrument_handler
 
 
 api = Blueprint(__name__)
 
 
 @api.route("/transactions", methods=["POST"])
-# @instrument_handler
 @inject_failures(0.1)
 def register_transaction():
     payload = request.get_json()
@@ -29,7 +27,6 @@ def register_transaction():
 
 
 @api.route("/transactions/<id>/status", methods=["PATCH"])
-# @instrument_handler
 @inject_failures(0.4)
 def update_transaction_status():
     txn_id = request.args.get("id")
@@ -44,7 +41,6 @@ def update_transaction_status():
 
 
 @api.route("/transactions", methods=["GET"])
-# @instrument_handler
 @inject_failures(0.4)
 def list_recent_transactions():
     transactions = cache.list_transactions()

@@ -1,9 +1,11 @@
 from io import BytesIO
+import logging
 
 from kafka import KafkaProducer
 from fastavro import writer, parse_schema
 
 
+logger = logging.getLogger()
 transaction_client = TransactionClient(KAFKA_HOSTS)
 
 
@@ -30,9 +32,13 @@ transaction_schema = parse_schema(
 
 class TransactionClient:
     def __init__(self, hosts):
-        self.producer = KafkaProducer(
-            bootstrap_servers=hosts, value_serializer=self._serialize
-        )
+        try:
+            self.producer = KafkaProducer(
+                bootstrap_servers=hosts, value_serializer=self._serialize
+            )
+        except Exception as err:
+            logging.error(f'kafka must be available: {str(err)}')
+            exit(1)
 
     def _serialize(self, payload):
         serialized = BytesIO()
@@ -40,4 +46,7 @@ class TransactionClient:
         return serialized
 
     def create(self, payload):
-        return self.producer.send("transaction_created", payload)
+        try:
+            return self.producer.send("transaction_created", payload)
+        except Exception as err:
+            logger.error(f'failed to send transaction to kafka: {str(err)}')            
