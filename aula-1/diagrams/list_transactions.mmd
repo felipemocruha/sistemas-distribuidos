@@ -1,0 +1,5 @@
+sequenceDiagram
+	autonumber
+	frontend->>bff: list transactions
+	bff->>redis: list transaction
+	bff-->>frontend: transactions
