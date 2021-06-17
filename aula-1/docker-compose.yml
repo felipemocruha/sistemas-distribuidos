@@ -4,16 +4,61 @@ services:
   scylla-1:
     image: scylladb/scylla
     container_name: scylla-1
-
+    networks: 
+      - transactions
+      
   scylla-2:
     image: scylladb/scylla
     container_name: scylla-2
     command: --seeds=scylla-1,scylla-3
+    networks: 
+      - transactions    
 
   scylla-3:
     image: scylladb/scylla
     container_name: scylla-3
     command: --seeds=scylla-1,scylla-2
+    networks: 
+      - transactions
 
   redis:
     image: redis:4
+    networks: 
+      - transactions    
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    networks: 
+      - transactions
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    networks: 
+      - transactions
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  envoy:
+    image: envoyproxy/envoy:v1.15.0
+    networks: 
+      - transactions
+    command: -l error --config-path /etc/envoy/envoy.yaml
+    volumes:
+      - ./envoy-config.yaml:/etc/envoy/envoy.yaml:ro
+      
+networks: 
+  transactions:
+    driver: bridge        
+    
