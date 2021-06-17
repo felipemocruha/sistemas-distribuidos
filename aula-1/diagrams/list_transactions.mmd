@@ -2,4 +2,5 @@ sequenceDiagram
 	autonumber
 	frontend->>bff: list transactions
 	bff->>redis: list transaction
+	redis-->>bff: transactions
 	bff-->>frontend: transactions

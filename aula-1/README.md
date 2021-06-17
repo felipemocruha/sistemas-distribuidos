@@ -58,13 +58,13 @@ docker ps
 
 4. Caso você necessite desligar algum container para responder as perguntas a seguir, execute o procedimento:
 
-a. liste os containers em execução:
+4.1. liste os containers em execução:
 
 ```
 docker ps
 ```
 
-b. escolha o container que deseja parar, copie seu `CONTAINER ID` e execute:
+4.2. escolha o container que deseja parar, copie seu `CONTAINER ID` e execute:
 
 ```
 docker kill -f <CONTAINER_ID>
@@ -108,6 +108,13 @@ def notify_status(transaction_id, status):
         raise BFFStatusWebhookError(Exception)
 ```
 
-a. Modifique esse código para que quando não for possível se comunicar com o serviço `bff`, continuar tentando enviar por mais 10 vezes antes de retornar um erro.
+8.1. Modifique esse código para que quando não for possível se comunicar com o serviço `bff`, continuar tentando enviar por mais 10 vezes antes de retornar um erro.
 
-b. Ainda nesse contexto de interação entre os serviços `transactions` e `bff`, quais são as desvantagens de receber o status por __webhook__ para o `bff`?
+8.2. Ainda nesse contexto de interação entre os serviços `transactions` e `bff`, quais são as desvantagens de receber o status por __webhook__ para o `bff`?
+
+## Materiais de apoio
+
+- https://avro.apache.org/docs/current/#intro
+- https://redis.io/documentation
+- https://www.envoyproxy.io/docs/envoy/latest/
+- https://docs.scylladb.com/architecture/architecture-fault-tolerance/
