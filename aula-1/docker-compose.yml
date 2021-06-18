@@ -65,6 +65,18 @@ services:
     volumes:
       - ./envoy-config.yaml:/etc/envoy/envoy.yaml:ro
 
+  bff:
+    image: felipemocruha/sistemas-distribuidos-bff:aula-1
+    container_name: bff
+    networks:
+      - transactions
+    ports:
+      - 5001:5001
+    environment:
+      KAFKA_HOSTS: kafka:9092
+      REDIS_HOST: redis
+      FAILURE_RATE: 0.2
+
 networks:
   transactions:
     driver: bridge

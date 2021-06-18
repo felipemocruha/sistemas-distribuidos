@@ -12,6 +12,7 @@ from service.core import (
 from service.pubsub import transaction_client
 from service.cache import cache
 from service.failures import inject_failures
+from service.config import FAILURE_RATE
 
 
 api = Blueprint("api", __name__)
@@ -19,7 +20,7 @@ logger = logging.getLogger()
 
 
 @api.route("/transactions", methods=["POST"])
-# @inject_failures(0.1)
+@inject_failures(FAILURE_RATE)
 def register_transaction():
     payload = request.get_json() or {}
 
@@ -46,7 +47,7 @@ def register_transaction():
 
 
 @api.route("/transactions/<txn_id>/status", methods=["PATCH"])
-#@inject_failures(0.4)
+@inject_failures(FAILURE_RATE)
 def update_transaction_status(txn_id):
     payload = request.get_json() or {}
     status = payload.get("status")
@@ -62,7 +63,7 @@ def update_transaction_status(txn_id):
 
 
 @api.route("/transactions", methods=["GET"])
-#@inject_failures(0.4)
+@inject_failures(FAILURE_RATE)
 def list_recent_transactions():
     try:
         transactions = cache.list_transactions()

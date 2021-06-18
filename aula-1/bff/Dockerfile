@@ -8,8 +8,7 @@ RUN apt update \
 RUN python3 -m pip install --upgrade pip && mkdir /app
 
 COPY . /app
-
-RUN pip install -r requirements.txt --no-cache-dir
 WORKDIR /app
-CMD ["gunicorn", "main:app"]
+RUN pip install -r requirements.txt --no-cache-dir
 
+CMD ["gunicorn", "-b", "0.0.0.0:5001", "main:app"]
