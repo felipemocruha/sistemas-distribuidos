@@ -1,5 +1,5 @@
-from service import create_app
 from service.pubsub import transaction_client
+from service.handlers import register_transaction
 
 
 if __name__ == '__main__':

@@ -6,6 +6,8 @@ services:
     container_name: scylla-1
     networks:
       - transactions
+    ports:
+      - 9042:9042
 
   scylla-2:
     image: scylladb/scylla
@@ -13,6 +15,8 @@ services:
     command: --seeds=scylla-1,scylla-3
     networks:
       - transactions
+    ports:
+      - 9043:9042
 
   scylla-3:
     image: scylladb/scylla
@@ -20,6 +24,8 @@ services:
     command: --seeds=scylla-1,scylla-2
     networks:
       - transactions
+    ports:
+      - 9044:9042
 
   redis:
     image: redis:4
@@ -76,6 +82,20 @@ services:
       KAFKA_HOSTS: kafka:9092
       REDIS_HOST: redis
       FAILURE_RATE: 0.2
+
+  transactions:
+    image: felipemocruha/sistemas-distribuidos-transactions:aula-1
+    container_name: transactions
+    networks:
+      - transactions
+    ports:
+      - 5002:5002
+    environment:
+      CASSANDRA_HOSTS: scylla-1,scylla-2,scylla-3
+      KAFKA_HOSTS: kafka:9092
+      ANTIFRAUD_HOST: antifraud:5003
+      BFF_HOST: bff:5001
+
 
 networks:
   transactions:

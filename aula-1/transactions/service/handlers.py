@@ -13,8 +13,8 @@ def register_transaction(transaction):
     try:
         transaction['status'] = antifraud_client.validate(transaction)
         transaction_repository.save(transaction)
-        notify_status(transaction['id'], transaction['id'])
-        
+        notify_status(transaction['transaction_id'], transaction['status'])
+
     except AntifraudInternalError:
         logger.error(f'failed to validate transaction: antifraud is unavailable')
 
@@ -23,4 +23,3 @@ def register_transaction(transaction):
 
     except BFFStatusWebhookError:
         logger.error(f'failed to notify bff: bff is unavailable')
-        

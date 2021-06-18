@@ -1,7 +1,7 @@
 import logging
 import requests
 
-from config import BFF_HOST
+from service.config import BFF_HOST
 
 
 logger = logging.getLogger()
@@ -21,4 +21,3 @@ def notify_status(transaction_id, status):
     except Exception as err:
         logging.error(f"failed to update status: {str(err)}")
         raise BFFStatusWebhookError(Exception)
-

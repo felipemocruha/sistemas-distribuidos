@@ -48,15 +48,18 @@ class TransactionClient:
     def _serialize(self, payload):
         serialized = BytesIO()
         writer(serialized, transaction_schema, [payload])
+        serialized.seek(0)
         return serialized.read()
 
     def create(self, payload):
-        #try:
-        return self.producer.send("transaction_created", payload)
+        try:
+            response = self.producer.send("transaction_created", payload)
+            logger.error(f"lala: {response.get(timeout=10)}")
+            logger.error(f"producer.send response: {response}")
 
-        #except Exception as err:
-         #   logger.error(f"failed to send transaction to kafka: {str(err)}")
-          #  raise err
+        except Exception as err:
+            logger.error(f"failed to send transaction to kafka: {str(err)}")
+            raise err
 
 
 transaction_client = TransactionClient(KAFKA_HOSTS)

@@ -1,4 +1,8 @@
 import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 
 CASSANDRA_HOSTS = os.getenv('CASSANDRA_HOSTS').split(',')

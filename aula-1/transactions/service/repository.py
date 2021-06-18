@@ -1,22 +1,47 @@
 import logging
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
-from config import CASSANDRA_HOSTS
+from service.config import CASSANDRA_HOSTS
 
 
 logger = logging.getLogger()
-transaction_repository = TransactionRepository
 
 
 class TransactionRepository:
-    def __init__(self):
+    def __init__(self, hosts):
         try:
-            auth_provider = PlainTextAuthProvider(username="user", password="pass")
-            cluster = Cluster(CASSANDRA_HOSTS, auth_provider=auth_provider)
+#            auth_provider = PlainTextAuthProvider(username="user", password="pass")
+            cluster = Cluster(hosts) #auth_provider=auth_provider)
             self.session = cluster.connect()
+
+            self.session.execute(
+                """
+                CREATE KEYSPACE IF NOT EXISTS transactions
+                WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 3};
+                """
+            )
+            self.session.set_keyspace('transactions')
+
+            self.session.execute(
+                """
+                CREATE TABLE IF NOT EXISTS transactions(
+                  transaction_id text,
+                  value_in_cents int,
+                  description text,
+                  customer_id text,
+                  merchant_id text,
+                  transaction_timestamp int,
+                  event_timestamp int,
+                  latitude float,
+                  longitude float,
+                  PRIMARY KEY (transaction_id)
+                )
+                """
+            )
+
         except Exception as err:
-            log.error(f'cassandra seems unavailable: {str(err)}')
-            
+            logger.error(f'cassandra seems unavailable: {str(err)}')
+
     def save(self, transaction):
         try:
             return self.session.execute(
@@ -46,11 +71,13 @@ class TransactionRepository:
                 """,
                 transaction,
             )
-        
+
         except Exception as err:
-            log.error(f'failed to run statement: {str(err)}')            
+            logger.error(f'failed to run statement: {str(err)}')
             raise RepositoryError()
 
-    
+
 class RepositoryError(Exception):
     pass
+
+transaction_repository = TransactionRepository(CASSANDRA_HOSTS)
