@@ -39,6 +39,7 @@ class TransactionRepository:
 
         except Exception as err:
             logger.error(f"cassandra seems unavailable: {str(err)}")
+            raise RepositoryError()
 
     def save(self, transaction):
         try:
