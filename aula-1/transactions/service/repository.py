@@ -1,6 +1,5 @@
 import logging
 from cassandra.cluster import Cluster
-from cassandra.auth import PlainTextAuthProvider
 from service.config import CASSANDRA_HOSTS
 
 
@@ -10,8 +9,7 @@ logger = logging.getLogger()
 class TransactionRepository:
     def __init__(self, hosts):
         try:
-#            auth_provider = PlainTextAuthProvider(username="user", password="pass")
-            cluster = Cluster(hosts) #auth_provider=auth_provider)
+            cluster = Cluster(hosts)
             self.session = cluster.connect()
 
             self.session.execute(
@@ -20,7 +18,7 @@ class TransactionRepository:
                 WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 3};
                 """
             )
-            self.session.set_keyspace('transactions')
+            self.session.set_keyspace("transactions")
 
             self.session.execute(
                 """
@@ -40,7 +38,7 @@ class TransactionRepository:
             )
 
         except Exception as err:
-            logger.error(f'cassandra seems unavailable: {str(err)}')
+            logger.error(f"cassandra seems unavailable: {str(err)}")
 
     def save(self, transaction):
         try:
@@ -73,11 +71,12 @@ class TransactionRepository:
             )
 
         except Exception as err:
-            logger.error(f'failed to run statement: {str(err)}')
+            logger.error(f"failed to run statement: {str(err)}")
             raise RepositoryError()
 
 
 class RepositoryError(Exception):
     pass
+
 
 transaction_repository = TransactionRepository(CASSANDRA_HOSTS)
