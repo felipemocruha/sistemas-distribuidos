@@ -24,6 +24,8 @@ services:
   redis:
     image: redis:4
     container_name: redis
+    ports:
+      - 6379:6379
     networks:
       - transactions
 
@@ -52,6 +54,7 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
 
   envoy:
     image: envoyproxy/envoy:v1.15.0

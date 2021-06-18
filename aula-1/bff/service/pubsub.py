@@ -1,12 +1,12 @@
 from io import BytesIO
 import logging
 
-from kafka import KafkaProducer
+from kafka import KafkaProducer, KafkaClient
 from fastavro import writer, parse_schema
+from service.config import KAFKA_HOSTS
 
 
 logger = logging.getLogger()
-transaction_client = TransactionClient(KAFKA_HOSTS)
 
 
 transaction_schema = parse_schema(
@@ -22,7 +22,7 @@ transaction_schema = parse_schema(
             {"name": "customer_id", "type": "string"},
             {"name": "merchant_id", "type": "string"},
             {"name": "transaction_timestamp", "type": "int"},
-            {"name": "event_timestamp", "type": "int"},            
+            {"name": "event_timestamp", "type": "int"},
             {"name": "latitude", "type": "float"},
             {"name": "longitude", "type": "float"},
         ],
@@ -34,19 +34,29 @@ class TransactionClient:
     def __init__(self, hosts):
         try:
             self.producer = KafkaProducer(
-                bootstrap_servers=hosts, value_serializer=self._serialize
+                bootstrap_servers=hosts,
+                value_serializer=self._serialize,
+                api_version=(0, 10, 1),
             )
+            client = KafkaClient(bootstrap_servers=hosts)
+            client.add_topic('transaction_created')
+
         except Exception as err:
-            logging.error(f'kafka must be available: {str(err)}')
+            logging.error(f"kafka must be available: {str(err)}")
             exit(1)
 
     def _serialize(self, payload):
         serialized = BytesIO()
         writer(serialized, transaction_schema, [payload])
-        return serialized
+        return serialized.read()
 
     def create(self, payload):
-        try:
-            return self.producer.send("transaction_created", payload)
-        except Exception as err:
-            logger.error(f'failed to send transaction to kafka: {str(err)}')            
+        #try:
+        return self.producer.send("transaction_created", payload)
+
+        #except Exception as err:
+         #   logger.error(f"failed to send transaction to kafka: {str(err)}")
+          #  raise err
+
+
+transaction_client = TransactionClient(KAFKA_HOSTS)

@@ -1,0 +1,13 @@
+click==8.0.1
+fastavro==1.4.1
+Flask==2.0.1
+gunicorn==20.1.0
+itsdangerous==2.0.1
+Jinja2==3.0.1
+kafka-python==2.0.2
+MarkupSafe==2.0.1
+pydantic==1.8.2
+python-dotenv==0.17.1
+redis==3.5.3
+typing-extensions==3.10.0.0
+Werkzeug==2.0.1
