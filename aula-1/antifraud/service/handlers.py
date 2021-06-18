@@ -1,4 +1,4 @@
-from antifraud.v1 import antifraud_pb2
+import antifraud_pb2
 from antifraud_pb2_grpc import AntifraudAPIServicer as IAntifraudAPIServicer
 
 from service.models import antifraud_model

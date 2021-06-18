@@ -1,5 +1,6 @@
 from io import BytesIO
 import logging
+import time
 
 from kafka import KafkaConsumer, KafkaClient
 from fastavro import reader, parse_schema
@@ -31,12 +32,20 @@ transaction_schema = parse_schema(
 
 class TransactionClient:
     def __init__(self, hosts):
-        self.consumer = KafkaConsumer(
-            bootstrap_servers=hosts,
-            value_deserializer=self._deserialize,
-            api_version=(0, 10, 1),
-        )
-        self.consumer.subscribe(['transaction_created'])
+        while True:
+            try:
+                self.consumer = KafkaConsumer(
+                    bootstrap_servers=hosts,
+                    value_deserializer=self._deserialize,
+                    group_id='transactions',
+                    api_version=(0, 10, 1),
+                )
+                self.consumer.subscribe(['transaction_created'])
+                break
+
+            except Exception as err:
+                logging.error(f"kafka must be available: {str(err)}")
+                time.sleep(1)
 
     def _deserialize(self, payload):
         txn_reader = reader(BytesIO(payload))

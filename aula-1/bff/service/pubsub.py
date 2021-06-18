@@ -1,5 +1,6 @@
 from io import BytesIO
 import logging
+import time
 
 from kafka import KafkaProducer, KafkaClient
 from fastavro import writer, parse_schema
@@ -32,18 +33,21 @@ transaction_schema = parse_schema(
 
 class TransactionClient:
     def __init__(self, hosts):
-        try:
-            self.producer = KafkaProducer(
-                bootstrap_servers=hosts,
-                value_serializer=self._serialize,
-                api_version=(0, 10, 1),
-            )
-            client = KafkaClient(bootstrap_servers=hosts)
-            client.add_topic('transaction_created')
 
-        except Exception as err:
-            logging.error(f"kafka must be available: {str(err)}")
-            exit(1)
+        while True:
+            try:
+                self.producer = KafkaProducer(
+                    bootstrap_servers=hosts,
+                    value_serializer=self._serialize,
+                    api_version=(0, 10, 1),
+                )
+                client = KafkaClient(bootstrap_servers=hosts)
+                client.add_topic('transaction_created')
+                break
+
+            except Exception as err:
+                logging.error(f"kafka must be available: {str(err)}")
+                time.sleep(1)
 
     def _serialize(self, payload):
         serialized = BytesIO()
@@ -54,8 +58,7 @@ class TransactionClient:
     def create(self, payload):
         try:
             response = self.producer.send("transaction_created", payload)
-            logger.error(f"lala: {response.get(timeout=10)}")
-            logger.error(f"producer.send response: {response}")
+            return response
 
         except Exception as err:
             logger.error(f"failed to send transaction to kafka: {str(err)}")

@@ -53,10 +53,11 @@ services:
       - zookeeper
     ports:
       - 9092:9092
+      - 29092:29092
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -76,6 +77,9 @@ services:
     container_name: bff
     networks:
       - transactions
+    depends_on:
+      - kafka
+      - redis
     ports:
       - 5001:5001
     environment:
@@ -86,6 +90,12 @@ services:
   transactions:
     image: felipemocruha/sistemas-distribuidos-transactions:aula-1
     container_name: transactions
+    depends_on:
+      - bff
+      - kafka
+      - scylla-1
+      - scylla-2
+      - scylla-3
     networks:
       - transactions
     ports:
@@ -94,7 +104,7 @@ services:
       CASSANDRA_HOSTS: scylla-1,scylla-2,scylla-3
       KAFKA_HOSTS: kafka:9092
       ANTIFRAUD_HOST: antifraud:5003
-      BFF_HOST: bff:5001
+      BFF_HOST: http://bff:5001
 
 
 networks:

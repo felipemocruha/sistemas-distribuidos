@@ -11,9 +11,13 @@ logger = logging.getLogger()
 
 def register_transaction(transaction):
     try:
+        logger.error(f'new transaction arrived: {transaction}')
+
         transaction['status'] = antifraud_client.validate(transaction)
         transaction_repository.save(transaction)
         notify_status(transaction['transaction_id'], transaction['status'])
+
+        logger.error(f'new transaction status: {transaction["status"]}')
 
     except RepositoryError:
        logger.error(f'failed to save transaction: database is unavailable')
