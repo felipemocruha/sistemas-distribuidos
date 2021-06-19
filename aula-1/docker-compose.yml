@@ -106,6 +106,17 @@ services:
       ANTIFRAUD_HOST: antifraud:5003
       BFF_HOST: http://bff:5001
 
+  antifraud:
+    image: felipemocruha/sistemas-distribuidos-antifraud:aula-1
+    container_name: antifraud
+    networks:
+      - transactions
+    ports:
+      - 5003:5003
+    environment:
+      APPROVED_THRESHOLD: 0.7
+      SERVER_HOST: antifraud:5003
+
 
 networks:
   transactions:

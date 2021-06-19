@@ -35,6 +35,7 @@ class TransactionRepository:
                     event_timestamp int,
                     latitude float,
                     longitude float,
+                    status text,
                     PRIMARY KEY (transaction_id)
                     )
                     """
@@ -59,7 +60,8 @@ class TransactionRepository:
                   transaction_timestamp,
                   event_timestamp,
                   latitude,
-                  longitude
+                  longitude,
+                  status
                 )
                 VALUES (
                   %(transaction_id)s,
@@ -70,7 +72,8 @@ class TransactionRepository:
                   %(transaction_timestamp)s,
                   %(event_timestamp)s,
                   %(latitude)s,
-                  %(longitude)s
+                  %(longitude)s,
+                  %(status)s
                 )
                 """,
                 transaction,

@@ -16,7 +16,7 @@ class AntifraudAPIServicer(IAntifraudAPIServicer):
         result = antifraud_model.approve(data)
 
         status = antifraud_pb2.ACCEPTED
-        if result > APPROVED_THRESHOLD:
+        if result < APPROVED_THRESHOLD:
             status = antifraud_pb2.REJECTED
 
-        return AntifraudAssesmentResponse(status=status)
+        return antifraud_pb2.AntifraudAssesmentResponse(status=status)
