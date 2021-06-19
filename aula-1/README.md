@@ -22,7 +22,7 @@ Considere os dois fluxos seguintes:
 
 ## Setup
 
-O código fonte que implementa as funcionalidades descritas acima está nesse repositório. Utilize o código fonte e os materiais de apoio para responder aos exercícios.
+O código fonte que implementa as funcionalidades descritas acima está nesse repositório. Utilize o código, os materiais de apoio e o que mais julgar necessário para responder aos exercícios.
 
 Para executar os sistemas, você precisa ter o `docker` e `docker-compose` instalados no seu computador.
 
