@@ -67,15 +67,15 @@ Caso você necessite desligar algum container para responder as perguntas a segu
 
 1. liste os containers em execução:
 
-	```
-	docker ps
-	```
+```
+docker ps
+```
 
 2. escolha o container que deseja parar, copie seu `CONTAINER ID` e execute:
 
-	```
-	docker kill -f <CONTAINER_ID>
-	```
+```
+docker kill -f <CONTAINER_ID>
+```
 
 Exemplo:
 
@@ -83,15 +83,15 @@ Exemplo:
 
 Ou então pelo nome:
 
-	```
-	docker kill -f <CONTAINER_NAME>
-	```
+```
+docker kill -f <CONTAINER_NAME>
+```
 
 Exemplo:
 
-	```
-	docker kill -f <CONTAINER_NAME>
-	```
+```
+docker kill -f <CONTAINER_NAME>
+```
 
 ### Exibir logs de um container
 
