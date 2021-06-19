@@ -1,5 +1,7 @@
 # Aula 1
 
+Slides da aula [aqui](https://docs.google.com/presentation/d/1lri5OF3TuDglFLFER7bVzMRHAfslFjcWwMEraUbQSUk/edit?usp=sharing)
+
 ## Contexto
 
 Imagine que você acabou de entrar em um time de desenvolvimento de uma empresa de pagamentos digitais.
@@ -159,6 +161,8 @@ docker-compose down
 ---
 
 ## Prática
+
+Antes de começar os exercícios, pegue um tempo para se familiarizar com os componentes e com a operação do docker, isso vai facilitar bastante seu entendimento depois.
 
 ### Exercícios
 
