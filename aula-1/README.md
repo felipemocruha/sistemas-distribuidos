@@ -90,7 +90,7 @@ docker kill -f <CONTAINER_NAME>
 Exemplo:
 
 ```
-docker kill -f <CONTAINER_NAME>
+docker kill -f bff
 ```
 
 ### Exibir logs de um container
@@ -144,7 +144,7 @@ SELECT * FROM transactions;
 
 ### Inspecionar mensagens no kafka
 
-Após instalar o [kafkacat](), execute:
+Após instalar o [kafkacat](https://github.com/edenhill/kafkacat), execute:
 
 ```
 kafkacat -b localhost:29092 -t transaction_created -o beggining
