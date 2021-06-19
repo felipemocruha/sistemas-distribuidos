@@ -22,6 +22,10 @@ Bons estudos!
 
 [Unpacking the eight fallacies of distributed computing](https://sookocheff.com/post/distributed-systems/unpacking-the-eight-fallacies-of-distributed-computing/)
 
+[Distributed architecture concepts I learned while building a large payments system](https://blog.pragmaticengineer.com/distributed-architecture-concepts-i-have-learned-while-building-payments-systems)
+
+[#LatencyTipOfTheDay: MOST page loads will experience the 99%'lie server response](http://latencytipoftheday.blogspot.com/2014/06/latencytipoftheday-most-page-loads.html)
+
 ## Livros Interessantes
 
 [Database Internals: A Deep Dive Into How Distributed Data Systems Work](https://www.amazon.com.br/Database-Internals-Alex-Petrov/dp/1492040347)
@@ -29,10 +33,6 @@ Bons estudos!
 [Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems](https://www.amazon.com.br/Designing-Data-Intensive-Applications-Martin-Kleppmann/dp/1449373321/ref=pd_lpo_1)
 
 [Microservices Patterns: With Examples in Java](https://www.amazon.com.br/Microservice-Patterns-examples-Chris-Richardson/dp/1617294543/ref=sr_1_1)
-
-[Distributed architecture concepts I learned while building a large payments system](https://blog.pragmaticengineer.com/distributed-architecture-concepts-i-have-learned-while-building-payments-systems)
-
-[#LatencyTipOfTheDay: MOST page loads will experience the 99%'lie server response](http://latencytipoftheday.blogspot.com/2014/06/latencytipoftheday-most-page-loads.html)
 
 ## Outros cursos de sistemas distribuídos
 
