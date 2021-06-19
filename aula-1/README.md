@@ -26,6 +26,13 @@ Considere os dois fluxos seguintes:
 
 O código fonte que implementa as funcionalidades descritas acima está nesse repositório. Utilize o código, os materiais de apoio e o que mais julgar necessário para responder aos exercícios.
 
+Para clonar esse repositório no seu computador, execute:
+
+```
+git clone https://github.com/felipemocruha/sistemas-distribuidos/
+cd sistemas-distribuidos/aula-1
+```
+
 Para executar os sistemas, você precisa ter o `docker` e `docker-compose` instalados no seu computador.
 
 1. Utilize [esse link](https://docs.docker.com/get-docker/) para baixar e instalar o `docker` no seu sistema.
