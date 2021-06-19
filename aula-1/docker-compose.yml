@@ -128,6 +128,15 @@ services:
       APPROVED_THRESHOLD: 0.4
       SERVER_HOST: 0.0.0.0:5003
 
+  generator:
+    image: felipemocruha/sistemas-distribuidos-generator:aula-1
+    container_name: generator
+    networks:
+      - transactions
+    environment:
+      REQUEST_INTERVAL: 3
+      BFF_HOST: bff:5001
+
 
 networks:
   transactions:
