@@ -103,19 +103,30 @@ services:
     environment:
       CASSANDRA_HOSTS: scylla-1,scylla-2,scylla-3
       KAFKA_HOSTS: kafka:9092
-      ANTIFRAUD_HOST: antifraud:5003
+      ANTIFRAUD_HOST: envoy:5005
       BFF_HOST: http://bff:5001
 
-  antifraud:
+  antifraud-1:
     image: felipemocruha/sistemas-distribuidos-antifraud:aula-1
-    container_name: antifraud
+    container_name: antifraud-1
+    networks:
+      - transactions
+    ports:
+      - 5004:5004
+    environment:
+      APPROVED_THRESHOLD: 0.7
+      SERVER_HOST: 0.0.0.0:5004
+
+  antifraud-2:
+    image: felipemocruha/sistemas-distribuidos-antifraud:aula-1
+    container_name: antifraud-2
     networks:
       - transactions
     ports:
       - 5003:5003
     environment:
-      APPROVED_THRESHOLD: 0.7
-      SERVER_HOST: antifraud:5003
+      APPROVED_THRESHOLD: 0.4
+      SERVER_HOST: 0.0.0.0:5003
 
 
 networks:
