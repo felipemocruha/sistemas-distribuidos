@@ -11,11 +11,11 @@ Considere o diagrama da arquitetura dos componentes:
 
 ![architecture](diagrams/architecture.png)
 
-**Server**: Responsável por gerenciar as contas de usuário e seus requisitos
-**Client**: Responsável por fazer a interação com os usuários do sistema de chat
-**Frontend**: Responsável por listar os usuários cadastrados no sistema
-**Kafka**: Responsável pela mensageria entre os diversos nós da rede
-**Sqlite**: Responsável por armazenar as contas de usuário criadas
+- **Server**: Responsável por gerenciar as contas de usuário e seus requisitos
+- **Client**: Responsável por fazer a interação com os usuários do sistema de chat
+- **Frontend**: Responsável por listar os usuários cadastrados no sistema
+- **Kafka**: Responsável pela mensageria entre os diversos nós da rede
+- **Sqlite**: Responsável por armazenar as contas de usuário criadas
 
 ## Setup
 
@@ -94,7 +94,7 @@ No arquivo `client/service/pubsub.py`, adicione a implementação do método `se
 
 Após implementar, modifique o payload correspondente no arquivo `client/main.py` com o conteúdo da mensagem que deseja enviar e também adicione o seu nome de usuário no campo `username`.
 
-Para descobrir os nomes de usuário de seus colegas, acesse: https://aula-4.alcantara.cloud
+Para descobrir os nomes de usuário de seus colegas, acesse: https://alcantara.cloud
 
 Para executar:
 
