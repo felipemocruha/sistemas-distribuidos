@@ -1,0 +1,4 @@
+docopt==0.6.2
+fastavro==1.4.3
+kafka-python==2.0.2
+python-dotenv==0.18.0

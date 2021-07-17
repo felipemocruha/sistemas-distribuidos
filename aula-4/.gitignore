@@ -1,0 +1,6 @@
+*/.env
+*/env
+*/__pycache__
+*/wrangler.toml
+frontend/public
+frontend/workers-site
