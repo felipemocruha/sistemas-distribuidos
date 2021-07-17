@@ -26,6 +26,15 @@ Bons estudos!
 
 [#LatencyTipOfTheDay: MOST page loads will experience the 99%'lie server response](http://latencytipoftheday.blogspot.com/2014/06/latencytipoftheday-most-page-loads.html)
 
+[Scheduling In Go : Part I - OS Scheduler](https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part1.html)
+
+[Scheduling In Go : Part II - Go Scheduler](https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part2.html)
+
+[Scheduling In Go : Part III - Concurrency](https://www.ardanlabs.com/blog/2018/12/scheduling-in-go-part3.html)
+
+[Spanner: Google’s Globally-Distributed Database](https://static.googleusercontent.com/media/research.google.com/pt-BR//archive/spanner-osdi2012.pdf)
+
+
 ## Livros Interessantes
 
 [Database Internals: A Deep Dive Into How Distributed Data Systems Work](https://www.amazon.com.br/Database-Internals-Alex-Petrov/dp/1492040347)
