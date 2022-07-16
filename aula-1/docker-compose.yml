@@ -2,26 +2,27 @@ version: '3'
 
 services:
   scylla-1:
-    image: scylladb/scylla
+    image: scylladb/scylla:4.6.4
     container_name: scylla-1
+    command: --disable-version-check --smp 1
     networks:
       - transactions
     ports:
       - 9042:9042
 
   scylla-2:
-    image: scylladb/scylla
+    image: scylladb/scylla:4.6.4
     container_name: scylla-2
-    command: --seeds=scylla-1,scylla-3
+    command: --seeds=scylla-1,scylla-3 --disable-version-check --smp 1
     networks:
       - transactions
     ports:
       - 9043:9042
 
   scylla-3:
-    image: scylladb/scylla
+    image: scylladb/scylla:4.6.4
     container_name: scylla-3
-    command: --seeds=scylla-1,scylla-2
+    command: --seeds=scylla-1,scylla-2 --disable-version-check --smp 1
     networks:
       - transactions
     ports:
@@ -36,7 +37,7 @@ services:
       - transactions
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+    image: confluentinc/cp-zookeeper:5.4.4
     networks:
       - transactions
     container_name: zookeeper
@@ -45,7 +46,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
 
   kafka:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:5.4.4
     container_name: kafka
     networks:
       - transactions
